@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <style name="ListViewItemText">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/list_view_item_padding</item>
+        <item name="android:textColor">?attr/colorOnSurfaceInverse</item>
+    </style>
+    <style name="ListItem" parent="Theme.MyLibrary.CardView">
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+    </style>
+</resources>

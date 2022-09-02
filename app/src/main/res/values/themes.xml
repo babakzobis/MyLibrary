@@ -28,5 +28,16 @@
         <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+        <item name="cardViewStyle">@style/Theme.MyLibrary.CardView</item>
+    </style>
+
+
+    <!-- CardView -->
+    <style name="Theme.MyLibrary.CardView" parent="CardView">
+        <item name="cardCornerRadius">@dimen/card_corner</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardMaxElevation">@dimen/card_max_elevation</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardUseCompatPadding">true</item>
     </style>
 </resources>
