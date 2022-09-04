@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import com.vanzoconsulting.mylibrary.databinding.FragmentMovieListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,10 +26,7 @@ class MovieListFragment : Fragment() {
     ): View {
 
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        _binding.fragmentMovieListMain.apply {
-            adapter = movieListAdapter
-            layoutManager = GridLayoutManager(this@MovieListFragment.context, 2)
-        }
+        _binding.fragmentMovieListMain.adapter = movieListAdapter
         movieListAdapter.registerAdapterDataObserver(
             MovieListAdapterObserver(
                 _binding.fragmentMovieListMain,
@@ -38,7 +34,7 @@ class MovieListFragment : Fragment() {
             )
         )
 
-        return _binding.root;
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
