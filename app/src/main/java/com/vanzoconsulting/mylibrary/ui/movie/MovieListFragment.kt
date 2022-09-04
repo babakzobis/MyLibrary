@@ -27,12 +27,6 @@ class MovieListFragment : Fragment() {
 
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
         _binding.fragmentMovieListMain.adapter = movieListAdapter
-        movieListAdapter.registerAdapterDataObserver(
-            MovieListAdapterObserver(
-                _binding.fragmentMovieListMain,
-                _binding.fragmentMovieListEmpty
-            )
-        )
 
         return _binding.root
     }
@@ -41,6 +35,7 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.movies.observe(viewLifecycleOwner) { movies ->
+            _binding.hasMovies = movies.isNotEmpty()
             movieListAdapter.submitList(movies)
         }
     }
