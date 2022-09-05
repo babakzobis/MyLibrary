@@ -2,4 +2,7 @@
     <string name="app_name">My Library</string>
     <string name="fragment_movie_list_loading">Movie list is loading</string>
     <string name="fragment_movie_list_retry">Retry</string>
+    <string name="fragment_movie_details_loading">Movie is loading</string>
+    <string name="fragment_movie_details_message_ok">OK</string>
+    <string name="fragment_movie_details_summary">Summary</string>
 </resources>

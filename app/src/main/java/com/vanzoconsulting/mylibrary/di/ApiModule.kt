@@ -1,7 +1,12 @@
 package com.vanzoconsulting.mylibrary.di
 
-import com.vanzoconsulting.mylibrary.data.remote.MovieApi
-import com.vanzoconsulting.mylibrary.data.remote.MovieApi.Companion.ENDPOINT
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.vanzoconsulting.mylibrary.network.BackdropAdapter
+import com.vanzoconsulting.mylibrary.network.MovieApi
+import com.vanzoconsulting.mylibrary.network.MovieApi.Companion.ENDPOINT_LIST
+import com.vanzoconsulting.mylibrary.network.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -26,6 +32,7 @@ object ApiModule {
     @Singleton
     fun provideOkHttpClient(logging: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(RequestInterceptor())
             .addInterceptor(logging)
             .build()
     }
@@ -34,8 +41,16 @@ object ApiModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(ENDPOINT)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .baseUrl(ENDPOINT_LIST)
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder()
+                        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                        .add(BackdropAdapter())
+                        .add(KotlinJsonAdapterFactory())
+                        .build()
+                )
+            )
             .client(client)
             .build()
     }

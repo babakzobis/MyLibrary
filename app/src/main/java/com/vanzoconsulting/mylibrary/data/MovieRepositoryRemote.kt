@@ -1,7 +1,7 @@
-package com.vanzoconsulting.mylibrary.data.remote
+package com.vanzoconsulting.mylibrary.data
 
-import com.vanzoconsulting.mylibrary.data.DataResource
-import com.vanzoconsulting.mylibrary.data.MovieRepository
+import com.vanzoconsulting.mylibrary.domain.entity.Movie
+import com.vanzoconsulting.mylibrary.network.MovieApi
 import com.vanzoconsulting.mylibrary.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
@@ -22,6 +22,8 @@ class MovieRepositoryRemote @Inject constructor(
 ) : MovieRepository {
 
     override suspend fun loadMovies() = safeApiCall { movieApi.getMovies() }
+    override suspend fun searchMovie(movie: Movie) =
+        safeApiCall { movieApi.searchMovie(movie.title, movie.year) }
 
     private suspend fun <T> safeApiCall(apiCall: suspend () -> T) =
         flow<DataResource<T>> {

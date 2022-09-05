@@ -1,7 +1,7 @@
 package com.vanzoconsulting.mylibrary.di
 
 import com.vanzoconsulting.mylibrary.data.MovieRepository
-import com.vanzoconsulting.mylibrary.data.remote.MovieRepositoryRemote
+import com.vanzoconsulting.mylibrary.data.MovieRepositoryRemote
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

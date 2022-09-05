@@ -1,6 +1,5 @@
 package com.vanzoconsulting.mylibrary.ui.movie
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanzoconsulting.mylibrary.data.DataResource
 import com.vanzoconsulting.mylibrary.data.MovieRepository
@@ -14,10 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(private val movieRepository: MovieRepository) :
-    ViewModel() {
+    StateViewModel<MoviesUiState>() {
 
-    private val _uiState = MutableStateFlow(MoviesUiState(isLoading = true))
-    val uiState: StateFlow<MoviesUiState> = _uiState.asStateFlow()
+    override var _uiState = MutableStateFlow(MoviesUiState(isLoading = true))
+    override val uiState: StateFlow<MoviesUiState> = _uiState.asStateFlow()
 
     init {
         loadMovies()
@@ -29,7 +28,7 @@ class MovieListViewModel @Inject constructor(private val movieRepository: MovieR
                 _uiState.update { currentUiState ->
                     currentUiState.copy(
                         isLoading = false,
-                        movies = (resource as? DataResource.Success)?.value ?: emptyList(),
+                        value = (resource as? DataResource.Success)?.value ?: emptyList(),
                         userMessage = (resource as? DataResource.Failure)?.message
                     )
                 }
@@ -42,11 +41,5 @@ class MovieListViewModel @Inject constructor(private val movieRepository: MovieR
             MoviesUiState(isLoading = true)
         }
         loadMovies()
-    }
-
-    fun userMessageShown() {
-        _uiState.update { currentUiState ->
-            currentUiState.copy(userMessage = null)
-        }
     }
 }

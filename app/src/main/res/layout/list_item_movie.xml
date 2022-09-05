@@ -1,59 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="movie"
+            type="com.vanzoconsulting.mylibrary.domain.entity.Movie" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{clickListener}">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/list_item_movie_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_movie"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/list_item_movie_content"
-            tools:src="@drawable/poster"
-            tools:layout_height="300dp" />
-
-        <LinearLayout
-            android:id="@+id/list_item_movie_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/card_content_padding"
-            app:layout_constraintTop_toBottomOf="@id/list_item_movie_image"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/list_item_movie_title"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/list_item_movie_image"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceListItem"
-                tools:text="Title"/>
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@id/list_item_movie_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_movie"
+                app:remoteSrc="@{movie.posterUrl}"
+                tools:layout_height="300dp"
+                tools:src="@drawable/poster" />
 
-            <TextView
-                android:id="@+id/list_item_movie_year"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/list_item_movie_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceListItemSecondary"
-                tools:text="2022"/>
+                android:orientation="vertical"
+                android:padding="@dimen/card_content_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/list_item_movie_image">
 
-            <TextView
-                android:id="@+id/list_item_movie_director"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceListItemSecondary"
-                tools:text="Director"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/list_item_movie_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:text="@{movie.title}"
+                    tools:text="Title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/list_item_movie_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    android:text="@{movie.year.toString()}"
+                    tools:text="2022" />
+
+                <TextView
+                    android:id="@+id/list_item_movie_director"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    android:text="@{movie.director}"
+                    tools:text="Director" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

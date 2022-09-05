@@ -1,14 +1,15 @@
-package com.vanzoconsulting.mylibrary.ui.movie
+package com.vanzoconsulting.mylibrary.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.vanzoconsulting.mylibrary.R
 import com.vanzoconsulting.mylibrary.databinding.ListItemMovieBinding
 import com.vanzoconsulting.mylibrary.domain.entity.Movie
+import com.vanzoconsulting.mylibrary.ui.movie.MovieListFragmentDirections
 
 
 class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDiffCallback()) {
@@ -17,13 +18,19 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDi
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Movie) {
-            binding.listItemMovieTitle.text = item.title
-            binding.listItemMovieYear.text = item.year.toString()
-            binding.listItemMovieDirector.text = item.director
-            binding.listItemMovieImage.load(item.posterUrl) {
-                crossfade(true)
-                placeholder(R.drawable.ic_movie)
+            binding.apply {
+                movie = item
+                setClickListener { v ->
+                    navigateToDetails(v, item)
+                }
+                executePendingBindings()
             }
+        }
+
+        private fun navigateToDetails(view: View, movie: Movie) {
+            val direction =
+                MovieListFragmentDirections.actionFragmentMovieListToFragmentMovieDetails(movie)
+            view.findNavController().navigate(direction)
         }
     }
 
@@ -34,7 +41,9 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.ViewHolder>(MovieDi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     private class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {

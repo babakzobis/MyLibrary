@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -19,6 +20,8 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField "String", "TMDB_API_KEY", tmdbApiKey
     }
 
     buildTypes {
@@ -50,6 +53,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation "androidx.fragment:fragment-ktx:1.5.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.2"
 
     // JSON
     implementation "com.squareup.moshi:moshi:1.13.0"
@@ -63,7 +68,8 @@ dependencies {
     // API
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    implementation 'com.squareup.moshi:moshi-adapters:1.13.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
     // Image
     implementation "io.coil-kt:coil:2.2.0"
