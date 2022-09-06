@@ -7,6 +7,9 @@
         <variable
             name="hasMovies"
             type="boolean" />
+        <variable
+            name="isLoading"
+            type="boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,21 +33,18 @@
             app:isGone="@{!hasMovies}"
             tools:listitem="@layout/list_item_movie" />
 
-        <!--    TODO: replace with an more elaborate view explaining the failure-->
-        <ImageView
-            android:id="@+id/fragment_movie_list_empty"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/fragment_movie_list_empty"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_list_empty"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:contentDescription="@string/fragment_movie_list_loading"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:isGone="@{hasMovies}"
-            tools:visibility="gone" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:isGone="@{!isLoading}"
+            app:minHideDelay="2000" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

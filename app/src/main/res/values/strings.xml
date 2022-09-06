@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My Library</string>
-    <string name="fragment_movie_list_empty">Movie list could not be retrieved</string>
+    <string name="fragment_movie_list_loading">Movie list is loading</string>
+    <string name="fragment_movie_list_retry">Retry</string>
 </resources>
